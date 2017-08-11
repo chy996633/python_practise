@@ -40,5 +40,7 @@ class Secretive:
 
 s = Secretive()
 # s.__inaccessible()
+s._Secretive__inaccessible() # don't use this
+
 s.accessible()
 s._method()
