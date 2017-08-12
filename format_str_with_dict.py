@@ -6,6 +6,7 @@ template = '''
 </head>
 <body>
 <h1>%(title)s</h1>
+<p>Hello World </p>
 <p>%(text)s</p>
 </body>
 </html>'''
