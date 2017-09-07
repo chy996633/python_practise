@@ -12,12 +12,20 @@ screen = pygame.display.set_mode((width, height))
 # 3 load image
 player = pygame.image.load("resources/images/dude.png")
 
+grass = pygame.image.load("resources/images/grass.png")
+castle = pygame.image.load("resources/images/castle.png")
 
 
 # 4 keep the loop through
 while 1:
     screen.fill(0)
-
+    for x in range(width/grass.get_width() + 1):
+        for y in range(height/grass.get_height() + 1):
+            screen.blit(grass, (x * 100, y * 100))
+    screen.blit(castle, (0, 30))
+    screen.blit(castle, (0, 135))
+    screen.blit(castle, (0, 240))
+    screen.blit(castle, (0, 345))
     screen.blit(player, (100, 100))
 
     pygame.display.flip()
