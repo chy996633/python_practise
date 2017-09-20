@@ -1,11 +1,11 @@
 import pygame
 
-filename = [2,3]
+filename = [1,2,3,4]
 file_template = 'music/%s.mp3'
-i=0
+i=1
 file=file_template % filename[i]
 pygame.init()
-print("播放音乐")
+print("play music")
 track = pygame.mixer.music.load(file)
 
 pygame.mixer.music.play()
@@ -16,7 +16,7 @@ while 1:
      isBusy = pygame.mixer.music.get_busy()
      if isBusy != 1:
         pass
-     #    print("播放下一首")
+     #    print("play next")
      #    file = 'music/2.mp3'
      #    track = pygame.mixer.music.load(file)
      #    pygame.mixer.music.play()
