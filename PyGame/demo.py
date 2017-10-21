@@ -1,5 +1,5 @@
 # 1 import pygame
-
+import math
 import pygame
 from pygame.locals import *
 
@@ -20,6 +20,10 @@ castle = pygame.image.load("resources/images/castle.png")
 # 4 keep the loop through
 while 1:
     screen.fill(0)
+    # 6 Set player position and rotation
+    position = pygame.mouse.get_pos()
+    angle = 
+
     for x in range(width/grass.get_width() + 1):
         for y in range(height/grass.get_height() + 1):
             screen.blit(grass, (x * 100, y * 100))
