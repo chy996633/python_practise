@@ -25,10 +25,14 @@ badguyimg1 = pygame.image.load("resources/images/badguy.png")
 badguyimg = badguyimg1
 healthbar = pygame.image.load("resources/images/healthbar.png")
 health = pygame.image.load("resources/images/health.png")
+gameOverImg = pygame.image.load("resources/images/gameover.png")
+youWinImg = pygame.image.load("resources/images/youwin.png")
 
 
 #4 - keep looping through
-while 1:
+exitcode = 0
+running = 1
+while running :
 	badtimer -= 1
 	#5 - clear the screen before drawing it again
 	screen.fill(0)
@@ -76,13 +80,13 @@ while 1:
 	for badguy in badguys:
 		if badguy[0] < -64:
 			badguys.pop(index)
-		badguy[0] -=7
+		badguy[0] -= 7
 		#6.3.1 Attack castle
 		badrect = pygame.Rect(badguyimg.get_rect())
 		badrect.top = badguy[1]
 		badrect.left = badguy[0]
 		if badrect.left < 64:
-			healthvalue -=random.randint(5,20)
+			healthvalue -= random.randint(5,20)
 			badguys.pop(index)
 		#6.3.2 check for collosions
 		index1 = 0
@@ -90,10 +94,11 @@ while 1:
 			bullrect = pygame.Rect(arrow.get_rect())
 			bullrect.left = bullet[1]
 			bullrect.top = bullet[2]
-			if badrect.colliderect(badrect):
+			if badrect.colliderect(bullrect):
 				acc[0] += 1
 				badguys.pop(index)
 				arrows.pop(index1)
+			index1 += 1
 		#6.3.3- next bad guy
 		index += 1
 	for badguy in badguys:
@@ -150,3 +155,45 @@ while 1:
 		playerpos[0] -= 5
 	elif keys[3]:
 		playerpos[0] += 5
+
+	#10 win-lose check
+	print"----------------"
+	if pygame.time.get_ticks() >= 90000:
+		running = 0
+		exitcode = 1
+	if healthvalue <= 0:
+		running = 0
+		exitcode = 0
+	if acc[1] != 0 :
+		accuracy = acc[0]*1.0/acc[1]*100
+	else:
+		accuracy = 0
+
+#11 win / lose display
+if exitcode == 0:
+	pygame.font.init()
+	font = pygame.font.Font(None,24)
+	text = font.render("Accuracy:"+str(accuracy)+"%",True,(255,0,0))
+	textRect = text.get_rect()
+	textRect.centerx = screen.get_rect().centerx
+	textRect.centery = screen.get_rect().centery+24
+	screen.blit(gameOverImg,(0,0))
+	screen.blit(text,textRect)
+else:
+	pygame.font.init()
+	font = pygame.font.Font(None,24)
+	text = font.render("Accuracy:"+str(accuracy)+"%",True,(0,255,0))
+	textRect = text.get_rect()
+	textRect.centerx = screen.get_rect().centerx
+	textRect.centery = screen.get_rect().centery+24
+	screen.blit(youWinImg,(0,0))
+	screen.blit(text,textRect)
+while 1:
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			pygame.quit()
+			exit(0)
+	pygame.display.flip()
+
+
+
