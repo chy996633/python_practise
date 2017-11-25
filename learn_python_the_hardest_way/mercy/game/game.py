@@ -27,7 +27,15 @@ healthbar = pygame.image.load("resources/images/healthbar.png")
 health = pygame.image.load("resources/images/health.png")
 gameOverImg = pygame.image.load("resources/images/gameover.png")
 youWinImg = pygame.image.load("resources/images/youwin.png")
-
+hit = pygame.mixer.Sound("resources/audio/explode.wav")
+enemy = pygame.mixer.Sound("resources/audio/enemy.wav")
+shoot = pygame.mixer.Sound("resources/audio/shoot.wav")
+hit.set_volume(0.05)
+enemy.set_volume(0.05)
+shoot.set_volume(0.05)
+pygame.mixer.music.load('resources/audio/moonlight.wav')
+pygame.mixer.music.play(-1,0.0)
+pygame.mixer.music.set_volume(0.25)
 
 #4 - keep looping through
 exitcode = 0
@@ -79,6 +87,7 @@ while running :
 	index = 0
 	for badguy in badguys:
 		if badguy[0] < -64:
+			hit.play()
 			badguys.pop(index)
 		badguy[0] -= 7
 		#6.3.1 Attack castle
@@ -95,6 +104,7 @@ while running :
 			bullrect.left = bullet[1]
 			bullrect.top = bullet[2]
 			if badrect.colliderect(bullrect):
+				enemy.play()
 				acc[0] += 1
 				badguys.pop(index)
 				arrows.pop(index1)
@@ -143,6 +153,7 @@ while running :
 			elif event.key == pygame.K_d:
 				keys[3] = False
 		if event.type == pygame.MOUSEBUTTONDOWN:
+			shoot.play()
 			position = pygame.mouse.get_pos()
 			acc[1] += 1
 			arrows.append([math.atan2(position[1]-(playerpos1[1]+32),position[0]-(playerpos1[0]+26)),playerpos1[0]+32,playerpos1[1]+32])
